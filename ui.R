@@ -47,7 +47,8 @@ shinyUI(pageWithSidebar(
 				),
 				conditionalPanel(condition="input.otherPlotType=='1'",
 					helpText("up to 4 colours can be specified: area of the beans, lines inside the bean, lines outside the bean, and average line per bean"),
-					textInput("beanBorder", "Border colour:", value=c("grey"))			
+					textInput("beanBorder", "Border colour:", value=c("grey")),	
+					radioButtons("beanPlotMedianMean", "Display: ", list("Median"=0, "Mean"=1))
 				)
 			),
 

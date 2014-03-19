@@ -79,6 +79,8 @@ shinyServer(function(input, output, session) {
 
 
 		nrOfSamples<-ncol(plotData)
+		# Display median or mean for bean plot?
+		if(input$beanPlotMedianMean==0){ myBeanplotCenter<-"median" } else { myBeanplotCenter<-"mean" }
 		# Generate colour vector
 		if(length(myColours)==1){
 			myColours<-rep(myColours, nrOfSamples)
@@ -167,7 +169,7 @@ shinyServer(function(input, output, session) {
 				} else {
 					beanplot(data.frame(plotDataM[,notPlotPoints]), at=notPlotPoints, ylim=myLim, 
 						horizontal=as.numeric(input$myOrientation), xlim=c(0.5, ncol(plotDataM)+0.5), 
-						col=myColours2, border=input$beanBorder)
+						col=myColours2, border=input$beanBorder, overallline = myBeanplotCenter)
 					title(main=input$myTitle, ylab=input$myYlab, xlab=input$myXlab, cex.main=input$cexTitle/10, cex.lab=input$cexAxislabel/10)
 	#				axis(1,at=c(1:nrOfSamples), labels=colnames(plotData), cex.axis=input$cexAxis/10)				
 					axis(1,at=c(1:nrOfSamples), labels=FALSE, cex.axis=input$cexAxis/10) #
@@ -231,7 +233,7 @@ shinyServer(function(input, output, session) {
 				} else { # Bean plot
 					beanplot(data.frame(plotDataM[,notPlotPoints]), at=notPlotPoints, ylim=myLim, 
 					horizontal=as.numeric(input$myOrientation), xlim=c(0.5, ncol(plotDataM)+0.5), 
-					col=myColours2, border=input$beanBorder)
+					col=myColours2, border=input$beanBorder, overallline = myBeanplotCenter)
 					title(main=input$myTitle, ylab=input$myYlab, xlab=input$myXlab, cex.main=input$cexTitle/10, cex.lab=input$cexAxislabel/10)
 					axis(2,at=c(1:nrOfSamples), labels=FALSE, cex.axis=input$cexAxis/10) # labels=colnames(plotData)
 				}
@@ -381,9 +383,11 @@ shinyServer(function(input, output, session) {
 				whiskers extend 1.5 times the interquartile range from the 25th and 75th percentiles; 
 				polygons represent density estimates of data and extend to extreme values.")
 			} else if (input$otherPlotType=='1') { # Bean plot
-				FL<-c("Black lines show the medians; 
+		# Display median or mean for bean plot?
+				if(input$beanPlotMedianMean==0){ myBeanplotCenter<-"median" } else { myBeanplotCenter<-"mean" }
+				FL<-paste("Black lines show the ",myBeanplotCenter,"s; 
 				white lines represent individual data points; 
-				polygons represent the estimated density of the data.")
+				polygons represent the estimated density of the data.", sep="")
 				#if(input$beanplotOverall){FL<-append(FL, c("dotted line represents overall "))}
 			}
 		} # END: other plot types	
