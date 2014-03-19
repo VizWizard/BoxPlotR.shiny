@@ -60,7 +60,8 @@ shinyUI(pageWithSidebar(
 			conditionalPanel(condition="input.plotType=='0'",
 				checkboxInput("showDataPoints", "Add data points", FALSE),
 				conditionalPanel(condition="input.showDataPoints",
-					radioButtons("datapointType", "", list("Default"=0, "Bee swarm"=1))
+					radioButtons("datapointType", "", list("Default"=0, "Bee swarm"=1, "Jittered"=2)),
+					textInput("pointColors", "Colour(s):", value=c("black"))					
 				),
 				checkboxInput("whiskerDefinition", "Definition of whisker extent", FALSE),
 				conditionalPanel(condition="input.whiskerDefinition",
@@ -129,6 +130,7 @@ shinyUI(pageWithSidebar(
 				h5("X-axis range (eg., '0,10'):"),
 				textInput("xlimit", "", value="")
 			),
+			checkboxInput("logScale", "Change to log scale (only for data >0)", FALSE),			
 			h5("Add grid: "),
 			radioButtons("addGrid", "", list("None" = 0, "X & Y"= 1, "X only" = 2, "Y only" = 3))
 #			numericInput("boxWidth", "Width of boxes:", value=1),
@@ -139,13 +141,19 @@ shinyUI(pageWithSidebar(
 		tabsetPanel(
 			# Welcome tab
 			tabPanel("About",
-				HTML('<p>This application allows users to generate customized <a href="http://en.wikipedia.org/wiki/Box_plot">box plots</a> in a number of variants based on their data. A data matrix 
+				HTML('<p>This application was developed with Nature Methods as described in this <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2837.html">editorial</a> and this 
+				<a href="http://blogs.nature.com/methagora/2014/01/bring-on-the-box-plots-boxplotr.html">blog entry</a>. Nature methods also dedicated a 
+				<a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2807.html">Points of View</a> and a <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2813.html">Points of Significance</a> 
+				column to box plots. We hope that you find the <a href= "http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2811.html">BoxPlotR</a> useful and we welcome suggestions 
+				for additional features by our users. We would like to thank everyone who has made constructive suggestions so far. We will document the addition of new features in the News tab.</p>
+				<p>This application allows users to generate customized <a href="http://en.wikipedia.org/wiki/Box_plot">box plots</a> in a number of variants based on their data. A data matrix 
 				can be uploaded as a file or pasted into the application. Basic box plots are generated based on the data and can be modified to include 
 				additional information. Additional features become available when checking that option.  Information about sample sizes can be represented 
 				by the width of each box where the widths are proportional to the square roots of the number of observations n. Notches can be added to the 
 				boxes. These are defined as +/-1.58*<a href="http://en.wikipedia.org/wiki/Interquartile_range">IQR</a>/sqrt(n) which gives roughly 95% confidence that two medians are different. It is also possible to define 
 				the whiskers based on the ideas of Spear and Tukey. Additional options of data visualization (violin and bean plots) reveal more information 
-				about the underlying data distribution. Plots can be labeled, customized (colors, dimensions, orientation) and exported as eps, pdf and svg files.</p>'),
+				about the underlying data distribution. Plots can be labeled, customized (colors, dimensions, orientation) and exported as eps, pdf and svg files.</p>
+				<p>BoxPlotR code can be run locally via <a href="https://github.com/VizWizard/BoxPlotR.shiny/blob/master/README.md">GitHub</a>. You can also download and install it as a virtual machine (see <a href="https://github.com/VizWizard/BoxPlotR.shiny/blob/master/README.md">GitHub</a> and FAQs for details). </p>'),
 				h5("Software references"),
 				HTML('<p>R Development Core Team. <i><a href="http://www.r-project.org/">R</a>:  A Language and Environment for Statistical Computing.</i> R Foundation for Statistical Computing, Vienna (2013) <br>
 				RStudio and Inc. <i><a href="http://www.rstudio.com/shiny/">shiny</a>: Web Application Framework for R.</i> R package version 0.5.0 (2013) <br>
@@ -184,15 +192,34 @@ shinyUI(pageWithSidebar(
 				" labs. Please send bugs and feature requests to Michaela Spitzer (michaela.spitzer(at)gmail.com) and Jan Wildenhain (jan.wildenhain(at)gmail.com). This application uses the ", 
 				a("shiny package from RStudio", href="http://www.rstudio.com/shiny/"), ".")
 			),
+			# News
+			tabPanel("News",
+				h5("March 18, 2014"), 
+				p("The user can now choose the color of the data points. There is also an additional option for data point display: data points can now be randomly jittered. 
+				A small bug in label display was fixed. Log scales can now be used.")
+			),			
 			# FAQ 
 			tabPanel("FAQ",
 				h5("Q: I have trouble editing the graphic files."), 
 				p("A: For EPS files make sure to 'ungroup' all objects so they can be edited independently. 
 				In Adobe Illustrator you will also need to use the 'release compound path' command. For PDF 
 				files you should 'release clipping mask'. SVG import appears to have problems in Adobe Illustrator 
-				and Corel Draw and should be avoided. EPS, PDF and SVG import all work with Inkscape http://www.inkscape.org/.")
-#				h5("Further information to be added to the figure legend:"), 
-#				p("What do the box plots show, explain colours if used.")
+				and Corel Draw and should be avoided. EPS, PDF and SVG import all work with Inkscape http://www.inkscape.org/."),
+				h5("Q: I would like to install BoxPlotR as a virtual machine."), 
+				HTML('<p>A: Please download the virtual machine from http://tyerslab.bio.ed.ac.uk/download/shiny.boxplot.7z (1.1GB). 
+				Unzip the file using <a href="http://www.7-zip.org/">7zip</a> or equivalent. The virtual machine is available in the open 
+				virtualization format (OVF) and you can use this file with <a href="https://www.virtualbox.org/">vbox</a> and 
+				<a href="https://my.vmware.com/web/vmware/free#desktop_end_user_computing/vmware_player/6_0">vmware player</a>. 
+				One easy way to use the server is to set the virtual host network environment to NAT. After importing the virtual machine you can 
+				start the server and login as user shiny  with password pk635153Y6jx89r. On the command line use the command ifconfg and record the 
+				IP address of the virtual server. Now going back to the virtual host network environment change the advanced settings of the NAT and 
+				activate port forwarding for the guest network ip address (shiny server) using port 80 to the host ip address using for example port 8080. 
+				Now you should be able to access the shiny server in a browser on port 127.0.0.1:8080 or your localhost:8080.
+				If you are not familiar with the software packages there are detailed examples for 
+				<a href="http://www.howtogeek.com/122641/how-to-forward-ports-to-a-virtual-machine-and-use-it-as-a-server/">vbox</a> and 
+				<a href="http://blog.fardad.com/2012/06/vmware-player-and-custom-nat-port-map.html">vmware</a>.</p>')
+#				h5("Q:"), 
+#				p("A:")
 			),			
 			id="tabs1"
 		)

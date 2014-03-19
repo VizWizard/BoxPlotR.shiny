@@ -6,6 +6,7 @@ shinyServer(function(input, output, session) {
 	source("MyVioplot.R")
 	library(beanplot)	 
 	source("boxplot_stats_Function.R")
+	source("BoxPlotR_functions.R")	
 	
 	observe({
 		if (input$clearText_button == 0) return()
@@ -66,20 +67,32 @@ shinyServer(function(input, output, session) {
 	# *** Generate the box plot ***
 	generateBoxPlot<-function(plotData){
 		par(mar=c(5,8,4,2)) # c(bottom, left, top, right)
+
 		myColours<-gsub("\\s","", strsplit(input$myColours,",")[[1]])
 		myColours<-gsub("0x","#", myColours)
 
 		myColours2<-gsub("\\s","", strsplit(input$myOtherPlotColours,",")[[1]])
 		myColours2<-gsub("0x","#", myColours2)
 
+		pointColors<-gsub("\\s","", strsplit(input$pointColors,",")[[1]])
+		pointColors<-gsub("0x","#", pointColors)
+
 
 		nrOfSamples<-ncol(plotData)
-		# generate colour vector
+		# Generate colour vector
 		if(length(myColours)==1){
 			myColours<-rep(myColours, nrOfSamples)
 		} else if(length(myColours) < nrOfSamples){
 			myColours<-rep(myColours,times=(round(nrOfSamples/length(myColours)))+1)
 		}
+		
+		# Generate colour vector for points
+		if(length(pointColors)==1){
+			pointColors<-rep(pointColors, nrOfSamples)
+		} else if(length(pointColors) < nrOfSamples){
+			pointColors<-rep(pointColors,times=(round(nrOfSamples/length(pointColors)))+1)
+		}
+
 		plotPoints<-c() # vector for indices of samples that are to be plotted as points, not as boxplots
 		notPlotPoints <- seq(1:nrOfSamples) # samples to plot as boxes/violins/beans
 		plotDataM<-plotData
@@ -93,7 +106,7 @@ shinyServer(function(input, output, session) {
 		datapointCounts<-apply(!apply(plotData, 2, is.na),2,sum) # Count number of valid data points for each sample
 		# Check if columns with few data points should be plotted as points
 
-		# minimum number of points is 4 -> check that nrOfDataPoints is larger than that		
+		# minimum number of points is 4 -> check that nrOfDataPoints is ay least 4		
 		mnp<-max(4,input$nrOfDataPoints)
 		
 		if(input$plotDataPoints==TRUE){
@@ -102,7 +115,8 @@ shinyServer(function(input, output, session) {
 			notPlotPoints <- seq(1:nrOfSamples)[datapointCounts>=mnp] # samples to plot as boxes/violins/beans
 		}
 
-		# Generate plotDataM matrix such that columns that should be plotted as points are filled with data points outside of visible plot area to 'reserve' spot for points
+		# Generate plotDataM matrix such that columns that should be plotted as points are filled with data points 
+		# outside of visible plot area to 'reserve' spot for points
 		for(i in plotPoints){
 			plotDataM[,i]<-c(rep(myLim[2]+10, nrow(plotData)-1),myLim[2]+20)
 		}
@@ -121,27 +135,24 @@ shinyServer(function(input, output, session) {
 		# *** 1) Vertical boxplots ***
 		par(las=1)
 		if(as.numeric(input$myOrientation)==0){
+			if(input$logScale==FALSE){ myLog="" } else { myLog="y"} # log scale for y-axis?
 			# *** Generate boxplot ***
 			if(input$plotType=='0'){
-				boxplot(plotDataM, col=myColours, ylab=input$myYlab, xlab=input$myXlab, ylim=myLim,
+				boxplot(plotDataM, col=myColours, ylab=input$myYlab, xlab=input$myXlab, ylim=myLim, log=myLog,
 					cex.lab=input$cexAxislabel/10, cex.axis=input$cexAxis/10, cex.main=input$cexTitle/10, 
 					main=input$myTitle, sub=input$mySubtitle, horizontal=as.numeric(input$myOrientation), frame=F, 
 					na.rm=TRUE, xaxt="n", range=myRange(), varwidth=input$myVarwidth, notch=input$myNotch) #notch=TRUE
 				axis(1,at=c(1:nrOfSamples), labels=FALSE, cex.axis=input$cexAxis/10) #
-				text(x=c(1:nrOfSamples), y=rep(myLim[1]-3,nrOfSamples), labels=colnames(plotData), 
-					pos=labelPos, xpd=TRUE, srt=xaxisLabelAngleNr, cex=input$cexAxis/10)
-				# * Add data points to plot if selected *
+#				mtext(text=colnames(plotData), side=1, at=c(1:nrOfSamples), xpd=TRUE, srt=xaxisLabelAngleNr, cex=input$cexAxis/10)
+				text(x=c(1:nrOfSamples), y=rep(myLim[1]-(myLim[2]-myLim[1])/10,nrOfSamples), labels=colnames(plotData), pos=labelPos, xpd=TRUE, srt=xaxisLabelAngleNr, cex=input$cexAxis/10)
+
+				# *** Add data points to plot if selected ***
 				if(input$showDataPoints==TRUE){
-					if(length(plotPoints)==0){ # all samples are box plots --> add points for all of them
-						if(input$datapointType==0){
-							for(i in c(1:nrOfSamples)){ points(rep(i, nrow(plotData)), plotData[,i], col="black") }
-						} else { beeswarm(plotData, add=TRUE) }
-					} else { # remove the ones that are already plotted as points
-						if(input$datapointType==0){
-							for(i in c(1:nrOfSamples)[-plotPoints]){ points(rep(i, nrow(plotData)), plotData[,i], col="black") }
-						} else { beeswarm(plotData, add=TRUE) }
-#						} else { beeswarm(plotData[,-plotPoints], at=c(1:nrOfSamples)[-plotPoints], add=TRUE) }
-					}
+						if(input$datapointType==1){ 
+							beeswarm(plotData, add=TRUE, col=pointColors) 
+						} else { 
+							jittered.points(plotData, FALSE, input$datapointType, pointColors) 
+						}			
 				}
 			} else { # *** Generate violin or bean plot ***
 				if(input$otherPlotType==0){ # Violin plot
@@ -164,7 +175,7 @@ shinyServer(function(input, output, session) {
 #					pos=labelPos, xpd=TRUE, srt=xaxisLabelAngleNr, cex=input$cexAxis/10)
 				}
 			}
-			# * Add points for samples with less then mnp data points *
+			# * Add points for samples with less than mnp data points *
 			# replace "white" with "black" otherwise data points will not be visible
 			for(i in plotPoints){
 				if(input$datapointType==0 | input$plotType==1 | (input$datapointType==1 & input$showDataPoints==FALSE)){
@@ -195,23 +206,20 @@ shinyServer(function(input, output, session) {
 			
 		# *** 2) Horizontal boxplots ***
 		} else { 
+			if(input$logScale==FALSE){ myLog="" } else { myLog="x"} # log scale for y-axis?
 			if(input$plotType=='0'){
-				boxplot(plotDataM, col=myColours, ylab=input$myYlab, xlab=input$myXlab, las=1, ylim=myLim,
+				boxplot(plotDataM, col=myColours, ylab=input$myYlab, xlab=input$myXlab, las=1, ylim=myLim, log=myLog,
 					cex.lab=input$cexAxislabel/10, cex.axis=input$cexAxis/10, cex.main=input$cexTitle/10, 
 					main=input$myTitle, sub=input$mySubtitle, horizontal=as.numeric(input$myOrientation), frame=F, 
 					na.rm=TRUE, yaxt="n", range=myRange(), varwidth=input$myVarwidth, notch=input$myNotch) #notch=TRUE
 				axis(2,at=c(1:nrOfSamples), labels=colnames(plotData), cex.axis=input$cexAxis/10)
 				# Add data points if option has been selected
 				if(input$showDataPoints==TRUE){
-					if(length(plotPoints)==0){ # all samples are boxplots --> add points for all of them
-						if(input$datapointType==0){
-							for(i in c(1:nrOfSamples)){ points(plotData[,i], rep(i, nrow(plotData)), col="black") }
-						} else { beeswarm(plotData, add=TRUE, horizontal=TRUE) }			
-					} else { # remove the ones that are already plotted as points
-						if(input$datapointType==0){
-							for(i in c(1:nrOfSamples)[-plotPoints]){ points(plotData[,i], rep(i, nrow(plotData)), col="black") }
-						} else { beeswarm(plotData, add=TRUE, horizontal=TRUE) }
-					}
+						if(input$datapointType==1){ 
+							beeswarm(plotData, add=TRUE, horizontal=TRUE, col=pointColors) 
+						} else { 
+							jittered.points(plotData, TRUE, input$datapointType, pointColors) 
+						}			
 				}
 			} else {
 				if(input$otherPlotType==0){ # Violin plot
@@ -228,19 +236,22 @@ shinyServer(function(input, output, session) {
 					axis(2,at=c(1:nrOfSamples), labels=FALSE, cex.axis=input$cexAxis/10) # labels=colnames(plotData)
 				}
 			}
-
-			# if there are columns with less than x data points, then add the points
-			for(i in plotPoints){
-				if(input$datapointType==0){
-					if(myColours[i]!="white"){
-						points(plotData[,i], rep(i, nrow(plotData)), col=myColours[i])
-					} else {
-						points(plotData[,i], rep(i, nrow(plotData)), col="white")				
+			# *** Add data points for columns with less than x data points ***
+			# Only if violin or bean plots are shown or points are not already added to boxplot (input$showDataPoints==FALSE)
+			if(input$plotType!='0' | input$showDataPoints==FALSE){
+				for(i in plotPoints){
+					if(input$datapointType==0){
+						if(myColours[i]!="white"){
+							points(plotData[,i], rep(i, nrow(plotData)), col=myColours[i])
+						} else {
+							points(plotData[,i], rep(i, nrow(plotData)), col="black")				
+						}
 					}
 				}
 			}
+			# *** Show number of data points for each column ***
 			if(input$showNrOfPoints==TRUE){text(y=1:ncol(dataM()), x=myLim[1], labels=boxplotStats()$n)}
-			# Add mean and CIs for mean
+			# *** Add mean and CIs for mean ***
 			if(input$addMeans==TRUE & input$plotType=='0'){
 				boxplotMeans<-apply(dataM(), 2, mean, na.rm=TRUE)
 				points(y=1:ncol(dataM()), x=boxplotMeans, pch="+", cex=2) 
@@ -257,7 +268,7 @@ shinyServer(function(input, output, session) {
 			}
 			
 		}
-		# Add grid based on option selected
+		# *** Add grid based on option selected ***
 		if(input$addGrid==0){} 
 		else if(input$addGrid==1){grid()} 
 		else if (input$addGrid==2){grid(ny=NA)}
