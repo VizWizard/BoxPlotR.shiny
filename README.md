@@ -39,10 +39,10 @@ Your web browser will open the web app.
 	- Go to your **SHINY_APP_HOME**
 	  - cd **SHINY_APP_HOME**
 	- Get the latest shiny-boxplot code from github:
-	  - wget https://github.com/jwildenhain/shiny-boxplot/archive/master.zip
+	  - wget https://github.com/VizWizard/BoxPlotR.shiny/archive/master.zip
 	  - unzip master.zip
-	  - mv shiny-boxplot-master shiny-boxplot
+	  - mv BoxPlotR.shiny-master BoxPlotR.shiny
 	- Restart shiny-server service:
 	  - sudo service shiny-server restart
 
-You should now be able to access shiny-boxplot at: http://YOURSITE:**SHINY_PORT**/shiny-boxplot
+You should now be able to access shiny-boxplot at: http://YOURSITE:**SHINY_PORT**/BoxPlotR.shiny
