@@ -1,3 +1,5 @@
+options(shiny.maxRequestSize = 200*1024^2)
+
 shinyServer(function(input, output, session) {
 
 	library(RColorBrewer)
@@ -26,9 +28,7 @@ shinyServer(function(input, output, session) {
 			if (is.null(input$upload))  {return(NULL)}
 			# Get the separator
 			mySep<-switch(input$fileSepDF, '1'=",",'2'="\t",'3'=";", '4'="") #list("Comma"=1,"Tab"=2,"Semicolon"=3)
-			if(file.info(inFile$datapath)$size<=10485800){
 				data<-read.table(inFile$datapath, sep=mySep, header=TRUE, fill=TRUE)
-			} else print("File is bigger than 10MB and will not be uploaded.")
 		} else { # To be looked into again - for special case when last column has empty entries in some rows
 			if(is.null(input$myData)) {return(NULL)} 
 			tmp<-matrix(strsplit(input$myData, "\n")[[1]])
