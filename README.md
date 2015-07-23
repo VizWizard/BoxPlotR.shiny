@@ -9,13 +9,13 @@ Installation
 You have two options for running shiny-boxplot:
 
 1) Launch directly from R and GitHub:
-  - Before running the app you will need to have R and RStudio installed (tested with R 3.0.2 and RStudio 0.97.449).
+  - Before running the app you will need to have R and RStudio installed (tested with R 3.2.1 and RStudio 0.99.465).
   - Launch the R console
 
 - Please run these lines in R:
   - install.packages("shiny")
   - install.packages("devtools")
-  - devtools::install_github("shiny-incubator","rstudio")
+  - devtools::install_github("rstudio/shiny-incubator")
   - install.packages("beeswarm")
   - install.packages("vioplot")
   - install.packages("beanplot")
