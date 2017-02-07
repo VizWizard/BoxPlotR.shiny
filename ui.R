@@ -142,7 +142,11 @@ shinyUI(pageWithSidebar(
 		tabsetPanel(
 			# Welcome tab
 			tabPanel("About",
-				HTML('<p>This application was developed with Nature Methods as described in this <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2837.html">editorial</a> and this 
+				HTML('
+				<br>
+				<p> If you experience problems with this boxplot server, there is an alternative BoxPlotR mirror available at <a href="http://boxplot.bio.ed.ac.uk"> boxplot.bio.ed.ac.uk</a>.</p>
+				
+				<p>This application was developed with Nature Methods as described in this <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2837.html">editorial</a> and this 
 				<a href="http://blogs.nature.com/methagora/2014/01/bring-on-the-box-plots-boxplotr.html">blog entry</a>. Nature methods also dedicated a 
 				<a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2807.html">Points of View</a> and a <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2813.html">Points of Significance</a> 
 				column to box plots. We hope that you find the <a href= "http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2811.html">BoxPlotR</a> useful and we welcome suggestions 
@@ -155,6 +159,7 @@ shinyUI(pageWithSidebar(
 				the whiskers based on the ideas of Spear and Tukey. Additional options of data visualization (violin and bean plots) reveal more information 
 				about the underlying data distribution. Plots can be labeled, customized (colors, dimensions, orientation) and exported as eps, pdf and svg files.</p>
 				<p>BoxPlotR code can be run locally via <a href="https://github.com/VizWizard/BoxPlotR.shiny/blob/master/README.md">GitHub</a>. You can also download and install it as a virtual machine (see <a href="https://github.com/VizWizard/BoxPlotR.shiny/blob/master/README.md">GitHub</a> and FAQs for details). </p>'),
+				
 				h5("Software references"),
 				HTML('<p>R Development Core Team. <i><a href="http://www.r-project.org/">R</a>:  A Language and Environment for Statistical Computing.</i> R Foundation for Statistical Computing, Vienna (2013) <br>
 				RStudio and Inc. <i><a href="http://www.rstudio.com/shiny/">shiny</a>: Web Application Framework for R.</i> R package version 0.5.0 (2013) <br>
@@ -195,6 +200,10 @@ shinyUI(pageWithSidebar(
 			),
 			# News
 			tabPanel("News",
+                h5("January 11, 2017"),
+                HTML('<p>If you experience problems with this boxplot server, there is an alternative BoxPlotR mirror available at <a href="http://boxplot.bio.ed.ac.uk">boxplot.bio.ed.ac.uk</a>.</p>'),
+                h5("July 23, 2014"),
+     			p("Upgrade to R version 3.1 and shiny-server 1.2"),
 				h5("March 18, 2014"), 
 				p("The user can now choose the color of the data points. There is also an additional option for data point display: data points can now be randomly jittered. 
 				A small bug in label display was fixed. Log scales can now be used.")
