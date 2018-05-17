@@ -40,6 +40,7 @@ shinyUI(pageWithSidebar(
 			radioButtons("plotType", "", list("Boxplot"=0, "Other"=1)),
 			conditionalPanel(condition="input.plotType=='1'",
 				radioButtons("otherPlotType", "", list("Violin plot"=0, "Bean plot"=1)),
+				HTML('<p>Violin plots are generated with the <a href="https://cran.r-project.org/web/packages/vioplot/index.html">vioplot package</a>. Bean plots are generate with the <a href="https://cran.r-project.org/web/packages/beanplot/index.html">beanplot package</a>.</p>'),
 				textInput("myOtherPlotColours", "Colour(s):", value=c("light grey, white")),
 				conditionalPanel(condition="input.otherPlotType=='0'",
 					helpText("Colour of the 'violin area'"),
@@ -62,6 +63,7 @@ shinyUI(pageWithSidebar(
 				checkboxInput("showDataPoints", "Add data points", FALSE),
 				conditionalPanel(condition="input.showDataPoints",
 					radioButtons("datapointType", "", list("Default"=0, "Bee swarm"=1, "Jittered"=2)),
+					HTML('<p>Using the <a href="http://www.cbs.dtu.dk/~eklund/beeswarm/">beeswarm package</a>.</p>'),
 					textInput("pointColors", "Colour(s):", value=c("black"))					
 				),
 				checkboxInput("whiskerDefinition", "Definition of whisker extent", FALSE),
