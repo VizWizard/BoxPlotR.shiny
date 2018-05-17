@@ -40,7 +40,7 @@ shinyUI(pageWithSidebar(
 			radioButtons("plotType", "", list("Boxplot"=0, "Other"=1)),
 			conditionalPanel(condition="input.plotType=='1'",
 				radioButtons("otherPlotType", "", list("Violin plot"=0, "Bean plot"=1)),
-				HTML('<p>Violin plots are generated with the <a href="https://cran.r-project.org/web/packages/vioplot/index.html">vioplot package</a>. Bean plots are generate with the <a href="https://cran.r-project.org/web/packages/beanplot/index.html">beanplot package</a>.</p>'),
+				HTML('<p style="color:#808080">Violin plots are generated with the <a href="https://cran.r-project.org/web/packages/vioplot/index.html">vioplot package</a>. Bean plots are generated with the <a href="https://cran.r-project.org/web/packages/beanplot/index.html">beanplot package</a>.</p>'),
 				textInput("myOtherPlotColours", "Colour(s):", value=c("light grey, white")),
 				conditionalPanel(condition="input.otherPlotType=='0'",
 					helpText("Colour of the 'violin area'"),
@@ -63,7 +63,7 @@ shinyUI(pageWithSidebar(
 				checkboxInput("showDataPoints", "Add data points", FALSE),
 				conditionalPanel(condition="input.showDataPoints",
 					radioButtons("datapointType", "", list("Default"=0, "Bee swarm"=1, "Jittered"=2)),
-					HTML('<p>Using the <a href="http://www.cbs.dtu.dk/~eklund/beeswarm/">beeswarm package</a>.</p>'),
+					HTML('<p style="color:#808080">Using the <a href="http://www.cbs.dtu.dk/~eklund/beeswarm/">beeswarm package</a>.</p>'),
 					textInput("pointColors", "Colour(s):", value=c("black"))					
 				),
 				checkboxInput("whiskerDefinition", "Definition of whisker extent", FALSE),
@@ -78,7 +78,7 @@ shinyUI(pageWithSidebar(
 #					conditionalPanel(condition="input.whiskerType=='2'",
 #						numericInput("AltmanRange", "Define whisker extent in percentiles (ie, '5' means that whiskers extend to 5th and 95th percentile):", min=0, step=0.5, value=5)
 #					),
-					HTML('<p>Tukey - whiskers extend to data points that are less than 1.5 x <a href="http://en.wikipedia.org/wiki/Interquartile_range">IQR</a> away from 1st/3rd <a href=:"http://en.wikipedia.org/wiki/Quartile">quartile</a>; 
+					HTML('<p style="color:#808080">Tukey - whiskers extend to data points that are less than 1.5 x <a href="http://en.wikipedia.org/wiki/Interquartile_range">IQR</a> away from 1st/3rd <a href=:"http://en.wikipedia.org/wiki/Quartile">quartile</a>; 
 					Spear - whiskers extend to minimum and maximum values; 
 					Altman - whiskers extend to 5th and 95th percentile (use only if n>40)</p>')
 				),
@@ -94,7 +94,7 @@ shinyUI(pageWithSidebar(
 				checkboxInput("myVarwidth", "Variable width boxes", FALSE),
 				helpText("Widths of boxes are proportional to square-roots of the number of observations."),
 				checkboxInput("myNotch", "Add notches", FALSE),
-				HTML('<p>+/-1.58*<a href="http://en.wikipedia.org/wiki/Interquartile_range">IQR</a>/sqrt(n) - gives roughly 95% confidence that two medians differ (Chambers et al., 1983)</p>'),
+				HTML('<p style="color:#808080">+/-1.58*<a href="http://en.wikipedia.org/wiki/Interquartile_range">IQR</a>/sqrt(n) - gives roughly 95% confidence that two medians differ (Chambers et al., 1983)</p>'),
 				conditionalPanel(condition="input.myNotch",
 					HTML('<p>The notches are defined as +/-1.58*<a href="http://en.wikipedia.org/wiki/Interquartile_range">IQR</a>/sqrt(n) and represent the 95% <a href="http://en.wikipedia.org/wiki/Confidence_interval">confidence interval</a> for each median. 
 					Non-overlapping notches give roughly 95% confidence that two medians differ, ie, in 19 out of 20 cases the population 
