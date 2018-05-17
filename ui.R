@@ -144,7 +144,6 @@ shinyUI(pageWithSidebar(
 			tabPanel("About",
 				HTML('
 				<br>
-				<p> If you experience problems with this boxplot server, there is an alternative BoxPlotR mirror available at <a href="http://boxplot.bio.ed.ac.uk"> boxplot.bio.ed.ac.uk</a>.</p>
 				
 				<p>This application was developed with Nature Methods as described in this <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2837.html">editorial</a> and this 
 				<a href="http://blogs.nature.com/methagora/2014/01/bring-on-the-box-plots-boxplotr.html">blog entry</a>. Nature methods also dedicated a 
