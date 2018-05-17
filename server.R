@@ -159,7 +159,7 @@ shinyServer(function(input, output, session) {
 			} else { # *** Generate violin or bean plot ***
 				if(input$otherPlotType==0){ # Violin plot
 					vioplot(as.list(data.frame(plotDataM)), col=myColours2, ylim=myLim, cex.axis=input$cexAxis/10, 
-						horizontal=as.numeric(input$myOrientation), range=myRange(), border=input$violinBorder)
+						horizontal=as.numeric(input$myOrientation), border=input$violinBorder)
 					title(main=input$myTitle, ylab=input$myYlab, xlab=input$myXlab, cex.main=input$cexTitle/10, cex.lab=input$cexAxislabel/10)
 #					axis(1,at=c(1:nrOfSamples), labels=colnames(plotData), cex.axis=input$cexAxis/10, sub=input$mySubtitle)
 					axis(1,at=c(1:nrOfSamples), labels=FALSE, cex.axis=input$cexAxis/10) #
@@ -226,7 +226,7 @@ shinyServer(function(input, output, session) {
 			} else {
 				if(input$otherPlotType==0){ # Violin plot
 					vioplot(as.list(data.frame(plotDataM)), col=myColours2[1], ylim=myLim, cex.axis=input$cexAxis/10, 
-						horizontal=as.numeric(input$myOrientation), range=myRange(), border=input$violinBorder)
+						horizontal=as.numeric(input$myOrientation), border=input$violinBorder)
 					title(main=input$myTitle, ylab=input$myYlab, xlab=input$myXlab, cex.main=input$cexTitle/10, cex.lab=input$cexAxislabel/10)
 					axis(2,at=c(1:nrOfSamples), labels=colnames(plotData), cex.axis=input$cexAxis/10)
 
