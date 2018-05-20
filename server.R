@@ -148,7 +148,7 @@ shinyServer(function(input, output, session) {
 				boxplot(plotDataM, col=myColours, ylab=input$myYlab, xlab=input$myXlab, ylim=myLim, log=myLog, outline=plotOutliers,
 					cex.lab=input$cexAxislabel/10, cex.axis=input$cexAxis/10, cex.main=input$cexTitle/10, 
 					main=input$myTitle, sub=input$mySubtitle, horizontal=as.numeric(input$myOrientation), frame=F, 
-					na.rm=TRUE, xaxt="n", range=myRange(), varwidth=input$myVarwidth, notch=input$myNotch, outpch=16) #notch=TRUE
+					na.rm=TRUE, xaxt="n", range=myRange(), varwidth=input$myVarwidth, notch=input$myNotch) #notch=TRUE, outpch=16
 				axis(1,at=c(1:nrOfSamples), labels=FALSE, cex.axis=input$cexAxis/10) #
 #				mtext(text=colnames(plotData), side=1, at=c(1:nrOfSamples), xpd=TRUE, srt=xaxisLabelAngleNr, cex=input$cexAxis/10)
 				text(x=c(1:nrOfSamples), y=rep(myLim[1]-(myLim[2]-myLim[1])/10,nrOfSamples), labels=colnames(plotData), pos=labelPos, xpd=TRUE, srt=xaxisLabelAngleNr, cex=input$cexAxis/10)
@@ -218,7 +218,7 @@ shinyServer(function(input, output, session) {
 				boxplot(plotDataM, col=myColours, ylab=input$myYlab, xlab=input$myXlab, las=1, ylim=myLim, log=myLog, outline=plotOutliers,
 					cex.lab=input$cexAxislabel/10, cex.axis=input$cexAxis/10, cex.main=input$cexTitle/10, 
 					main=input$myTitle, sub=input$mySubtitle, horizontal=as.numeric(input$myOrientation), frame=F, 
-					na.rm=TRUE, yaxt="n", range=myRange(), varwidth=input$myVarwidth, notch=input$myNotch, outpch=16) #notch=TRUE
+					na.rm=TRUE, yaxt="n", range=myRange(), varwidth=input$myVarwidth, notch=input$myNotch) #notch=TRUE, outpch=16
 				axis(2,at=c(1:nrOfSamples), labels=colnames(plotData), cex.axis=input$cexAxis/10)
 				# Add data points if option has been selected
 				if(input$showDataPoints==TRUE){
