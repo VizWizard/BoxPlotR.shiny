@@ -99,6 +99,7 @@ shinyServer(function(input, output, session) {
 		notPlotPoints <- seq(1:nrOfSamples) # samples to plot as boxes/violins/beans
 		plotDataM<-plotData
 		# Determine plot range
+		myBuffer<-max(abs(range(plotData,na.rm=TRUE)))*0.1 # add 10% of data maximum at each end of y/x axis
 		if(as.numeric(input$myOrientation)==0){		
 			if(input$ylimit==""){myLim<-range(plotData,na.rm=TRUE)+c(-1,+1)} else {myLim<-as.numeric(strsplit(input$ylimit,",")[[1]])}
 		} else {
@@ -335,13 +336,14 @@ shinyServer(function(input, output, session) {
 
 	# *** Output boxplot statistics in table below plot ***
 	output$boxplotStatsTable <- renderTable({
+		M<-rbind(as.matrix(boxplotStats()$stats[c(5,4,3,2,1),]),boxplotStats()$n)
 		if(input$addMeans){
-			M<-rbind(boxplotStats()$stats[c(5,4,3,2,1),],boxplotStats()$n)
+			#M<-rbind(boxplotStats()$stats[c(5,4,3,2,1),],boxplotStats()$n)
 			M<-rbind(M, apply(dataM(), 2, mean, na.rm=TRUE))
 			rownames(M)<-c("Upper whisker","3rd quartile","Median","1st quartile","Lower whisker", "Nr. of data points", "Mean")
 			colnames(M)<-colnames(dataM())
 		} else {
-			M<-rbind(boxplotStats()$stats[c(5,4,3,2,1),],boxplotStats()$n)
+			#M<-rbind(boxplotStats()$stats[c(5,4,3,2,1),],boxplotStats()$n)
 			rownames(M)<-c("Upper whisker","3rd quartile","Median","1st quartile","Lower whisker", "Nr. of data points")
 			colnames(M)<-colnames(dataM())
 		}
