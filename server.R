@@ -347,6 +347,7 @@ shinyServer(function(input, output, session) {
 			rownames(M)<-c("Upper whisker","3rd quartile","Median","1st quartile","Lower whisker", "Nr. of data points")
 			colnames(M)<-colnames(dataM())
 		}
+		print(M)
 		M
 	})
 	
