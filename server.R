@@ -133,14 +133,19 @@ shinyServer(function(input, output, session) {
 		}
 
 		par(mar=c(12.1, 11.1, 4.1, 2.1))
-
+		
+		if(input$showDataPoints==TRUE) {
+			plotOutliers=FALSE
+		} else {
+			plotOutliers=TRUE
+		}
 		# *** 1) Vertical boxplots ***
 		par(las=1)
 		if(as.numeric(input$myOrientation)==0){
 			if(input$logScale==FALSE){ myLog="" } else { myLog="y"} # log scale for y-axis?
 			# *** Generate boxplot ***
 			if(input$plotType=='0'){
-				boxplot(plotDataM, col=myColours, ylab=input$myYlab, xlab=input$myXlab, ylim=myLim, log=myLog,
+				boxplot(plotDataM, col=myColours, ylab=input$myYlab, xlab=input$myXlab, ylim=myLim, log=myLog, outline=plotOutliers,
 					cex.lab=input$cexAxislabel/10, cex.axis=input$cexAxis/10, cex.main=input$cexTitle/10, 
 					main=input$myTitle, sub=input$mySubtitle, horizontal=as.numeric(input$myOrientation), frame=F, 
 					na.rm=TRUE, xaxt="n", range=myRange(), varwidth=input$myVarwidth, notch=input$myNotch, outpch=16) #notch=TRUE
@@ -210,7 +215,7 @@ shinyServer(function(input, output, session) {
 		} else { 
 			if(input$logScale==FALSE){ myLog="" } else { myLog="x"} # log scale for y-axis?
 			if(input$plotType=='0'){
-				boxplot(plotDataM, col=myColours, ylab=input$myYlab, xlab=input$myXlab, las=1, ylim=myLim, log=myLog,
+				boxplot(plotDataM, col=myColours, ylab=input$myYlab, xlab=input$myXlab, las=1, ylim=myLim, log=myLog, outline=plotOutliers,
 					cex.lab=input$cexAxislabel/10, cex.axis=input$cexAxis/10, cex.main=input$cexTitle/10, 
 					main=input$myTitle, sub=input$mySubtitle, horizontal=as.numeric(input$myOrientation), frame=F, 
 					na.rm=TRUE, yaxt="n", range=myRange(), varwidth=input$myVarwidth, notch=input$myNotch, outpch=16) #notch=TRUE
