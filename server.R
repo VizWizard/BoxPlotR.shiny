@@ -336,14 +336,14 @@ shinyServer(function(input, output, session) {
 
 	# *** Output boxplot statistics in table below plot ***
 	output$boxplotStatsTable <- renderTable({
-		#M<-rbind(as.matrix(boxplotStats()$stats[c(5,4,3,2,1),]),boxplotStats()$n)
+		M<-rbind(as.matrix(boxplotStats()$stats[c(5,4,3,2,1),]),boxplotStats()$n)
 		if(input$addMeans){
-			M<-rbind(boxplotStats()$stats[c(5,4,3,2,1),],boxplotStats()$n)
+			#M<-rbind(boxplotStats()$stats[c(5,4,3,2,1),],boxplotStats()$n)
 			M<-rbind(M, apply(dataM(), 2, mean, na.rm=TRUE))
 			rownames(M)<-c("Upper whisker","3rd quartile","Median","1st quartile","Lower whisker", "Nr. of data points", "Mean")
 			colnames(M)<-colnames(dataM())
 		} else {
-			M<-rbind(boxplotStats()$stats[c(5,4,3,2,1),],boxplotStats()$n)
+			#M<-rbind(boxplotStats()$stats[c(5,4,3,2,1),],boxplotStats()$n)
 			rownames(M)<-c("Upper whisker","3rd quartile","Median","1st quartile","Lower whisker", "Nr. of data points")
 			colnames(M)<-colnames(dataM())
 		}
