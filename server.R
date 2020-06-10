@@ -18,9 +18,9 @@ shinyServer(function(input, output, session) {
 	dataM <- reactive({
 		if(input$dataInput==1){
 			if(input$sampleData==1){
-				data<-read.table("Boxplot_testData2.csv", sep=",", header=TRUE, fill=TRUE)			
+				data<-read.table("Boxplot_testData2.csv", sep=",", header=TRUE, fill=TRUE, check.names=FALSE)			
 			} else {
-				data<-read.table("Boxplot_testData.txt", sep=",", header=TRUE)		
+				data<-read.table("Boxplot_testData.txt", sep=",", header=TRUE, check.names=FALSE)
 			}
 		} else if(input$dataInput==2){
 			inFile <- input$upload
@@ -28,19 +28,19 @@ shinyServer(function(input, output, session) {
 			if (is.null(input$upload))  {return(NULL)}
 			# Get the separator
 			mySep<-switch(input$fileSepDF, '1'=",",'2'="\t",'3'=";", '4'="") #list("Comma"=1,"Tab"=2,"Semicolon"=3)
-				data<-read.table(inFile$datapath, sep=mySep, header=TRUE, fill=TRUE)
+				data<-read.table(inFile$datapath, sep=mySep, header=TRUE, fill=TRUE, check.names=FALSE)
 		} else { # To be looked into again - for special case when last column has empty entries in some rows
-			if(is.null(input$myData)) {return(NULL)} 
+			if(is.null(input$myData)) {return(NULL)}
 			tmp<-matrix(strsplit(input$myData, "\n")[[1]])
 			mySep<-switch(input$fileSepP, '1'=",",'2'="\t",'3'=";")
 			myColnames<-strsplit(tmp[1], mySep)[[1]]
-			data<-matrix(0, length(tmp)-1, length(myColnames))
-			colnames(data)<-myColnames
+			data<-matrix(0, length(tmp)-1, length(myColnames), dimnames=list(NULL,myColnames))
 			for(i in 2:length(tmp)){
 				myRow<-as.numeric(strsplit(paste(tmp[i],mySep,mySep,sep=""), mySep)[[1]])
 				data[i-1,]<-myRow[-length(myRow)]
 			}
-			data<-data.frame(data)		
+			data<-data.frame(data)
+			names(data)<-myColnames
 		}
 		return(data)
 	})
