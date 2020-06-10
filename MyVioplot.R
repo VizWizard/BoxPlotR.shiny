@@ -66,8 +66,8 @@ vioplot<-function (x, range = 1.5, h = NULL, ylim = NULL, names = NULL,
         box()
         for (i in 1:n) {
             polygon(c(at[i] - height[[i]], rev(at[i] + height[[i]])), 
-                c(base[[i]], rev(base[[i]])), col = col, border = border, 
-                lty = lty, lwd = lwd)
+                c(base[[i]], rev(base[[i]])), col = ifelse(length(col)>1, col[1+(i-1)%%length(col)], col),
+                border = border, lty = lty, lwd = lwd)
             if (drawRect) {
                 lines(at[c(i, i)], c(lower[i], upper[i]), lwd = lwd, 
                   lty = lty)
@@ -86,8 +86,8 @@ vioplot<-function (x, range = 1.5, h = NULL, ylim = NULL, names = NULL,
         box()
         for (i in 1:n) {
             polygon(c(base[[i]], rev(base[[i]])), c(at[i] - height[[i]], 
-                rev(at[i] + height[[i]])), col = col, border = border, 
-                lty = lty, lwd = lwd)
+                rev(at[i] + height[[i]])), col = ifelse(length(col)>1, col[1+(i-1)%%length(col)], col),
+                border = border, lty = lty, lwd = lwd)
             if (drawRect) {
                 lines(c(lower[i], upper[i]), at[c(i, i)], lwd = lwd, 
                   lty = lty)
