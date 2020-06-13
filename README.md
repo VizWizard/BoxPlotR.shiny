@@ -3,6 +3,10 @@ BoxPlotR
 
 This is the repository for the Shiny application presented in "BoxPlotR: a web tool for generation of box plots" (Spitzer at al. 2014).
 
+Update
+-------
+13th of June - fix in Violin plot and boxplot colour assignments
+
 Installation
 ------------
 
