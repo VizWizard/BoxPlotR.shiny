@@ -149,20 +149,21 @@ shinyUI(pageWithSidebar(
 				HTML('
 				<br>
 				
-				<p>This application was developed with Nature Methods as described in this <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2837.html">editorial</a> and this 
-				<a href="http://blogs.nature.com/methagora/2014/01/bring-on-the-box-plots-boxplotr.html">blog entry</a>. Nature methods also dedicated a 
-				<a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2807.html">Points of View</a> and a <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2813.html">Points of Significance</a> 
-				column to box plots. We hope that you find the <a href= "http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2811.html">BoxPlotR</a> useful and we welcome suggestions 
+				<p>This application was developed with Nature Methods and you can find the publication <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2811.html">here</a>.
+				The BoxPlotR has also been mentioned in this <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2837.html">editorial</a> and this
+				<a href="http://blogs.nature.com/methagora/2014/01/bring-on-the-box-plots-boxplotr.html">blog entry</a>. Nature methods also dedicated a
+				<a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2807.html">Points of View</a> and a <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2813.html">Points of Significance</a>
+				column to box plots. We hope that you find the <a href= "http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2811.html">BoxPlotR</a> useful and we welcome suggestions
 				for additional features by our users. We would like to thank everyone who has made constructive suggestions so far. We will document the addition of new features in the News tab.</p>
-				<p>This application allows users to generate customized <a href="http://en.wikipedia.org/wiki/Box_plot">box plots</a> in a number of variants based on their data. A data matrix 
-				can be uploaded as a file or pasted into the application. Basic box plots are generated based on the data and can be modified to include 
-				additional information. Additional features become available when checking that option.  Information about sample sizes can be represented 
-				by the width of each box where the widths are proportional to the square roots of the number of observations n. Notches can be added to the 
-				boxes. These are defined as +/-1.58*<a href="http://en.wikipedia.org/wiki/Interquartile_range">IQR</a>/sqrt(n) which gives roughly 95% confidence that two medians are different. It is also possible to define 
-				the whiskers based on the ideas of Spear and Tukey. Additional options of data visualization (violin and bean plots) reveal more information 
+				<p>This application allows users to generate customized <a href="http://en.wikipedia.org/wiki/Box_plot">box plots</a> in a number of variants based on their data. A data matrix
+				can be uploaded as a file or pasted into the application. Basic box plots are generated based on the data and can be modified to include
+				additional information. Additional features become available when checking that option.  Information about sample sizes can be represented
+				by the width of each box where the widths are proportional to the square roots of the number of observations n. Notches can be added to the
+				boxes. These are defined as +/-1.58*<a href="http://en.wikipedia.org/wiki/Interquartile_range">IQR</a>/sqrt(n) which gives roughly 95% confidence that two medians are different. It is also possible to define
+				the whiskers based on the ideas of Spear and Tukey. Additional options of data visualization (violin and bean plots) reveal more information
 				about the underlying data distribution. Plots can be labeled, customized (colors, dimensions, orientation) and exported as eps, pdf and svg files.</p>
 				<p>BoxPlotR code can be run locally via <a href="https://github.com/VizWizard/BoxPlotR.shiny/blob/master/README.md">GitHub</a>. You can also download and install it as a virtual machine (see <a href="https://github.com/VizWizard/BoxPlotR.shiny/blob/master/README.md">GitHub</a> and FAQs for details). </p>'),
-				
+
 				h5("Software references"),
 				HTML('<p>R Development Core Team. <i><a href="http://www.r-project.org/">R</a>:  A Language and Environment for Statistical Computing.</i> R Foundation for Statistical Computing, Vienna (2013) <br>
 				RStudio and Inc. <i><a href="http://www.rstudio.com/shiny/">shiny</a>: Web Application Framework for R.</i> R package version 0.5.0 (2013) <br>
@@ -172,15 +173,15 @@ shinyUI(pageWithSidebar(
 				Neuwirth, E. <i><a href="http://cran.r-project.org/web/packages/RColorBrewer/index.html">RColorBrewer</a>: ColorBrewer palettes.</i> R package version 1.0-5. (2011)</p>'),
 				h5("Further references"),
 				HTML('<p> Hadley Wickham and Lisa Stryjewski: <a href="http://vita.had.co.nz/papers/boxplots.pdf"> 40 years of boxplots </a></p>'),
-				HTML('<p> Kristin Potter: <a href="http://pages.uoregon.edu/kpotter/publications/potter-2006-MPSI.pdf">Methods for Presenting Statistical Information: The Box Plot</a></p>'),
-				h6("This application was created by the ", a("Tyers", href="http://tyers.iric.ca/"), " and ", a("Rappsilber", href="http://rappsilberlab.org/"), 
-				" labs. Please send bugs and feature requests to Michaela Spitzer (michaela.spitzer(at)gmail.com) and Jan Wildenhain (jan.wildenhain(at)gmail.com). This application uses the ", 
+				HTML('<p> Kristin Potter: <a href="http://www.sci.utah.edu/~kpotter/publications/potter-2006-MPSI.pdf">Methods for Presenting Statistical Information: The Box Plot</a></p>'),
+				h6("This application was created by the ", a("Tyers", href="http://tyers.iric.ca/"), " and ", a("Rappsilber", href="http://rappsilberlab.org/"),
+				" labs. Please send bugs and feature requests to Michaela Spitzer (michaela.spitzer(at)gmail.com) and Jan Wildenhain (jan.wildenhain(at)gmail.com). This application uses the ",
 				a("shiny package from RStudio", href="http://www.rstudio.com/shiny/"), ".")
 			),
 			# Data upload tab
 			tabPanel("Data upload", tableOutput("filetable"),
-				h6("This application was created by the ", a("Tyers", href="http://tyers.iric.ca/"), " and ", a("Rappsilber", href="http://rappsilberlab.org/"), 
-				" labs. Please send bugs and feature requests to Michaela Spitzer (michaela.spitzer(at)gmail.com) and Jan Wildenhain (jan.wildenhain(at)gmail.com). This application uses the ", 
+				h6("This application was created by the ", a("Tyers", href="http://tyers.iric.ca/"), " and ", a("Rappsilber", href="http://rappsilberlab.org/"),
+				" labs. Please send bugs and feature requests to Michaela Spitzer (michaela.spitzer(at)gmail.com) and Jan Wildenhain (jan.wildenhain(at)gmail.com). This application uses the ",
 				a("shiny package from RStudio", href="http://www.rstudio.com/shiny/"), ".")
 			),
 			# Boxplot tab
@@ -189,26 +190,35 @@ shinyUI(pageWithSidebar(
 				downloadButton("downloadPlotSVG", "Download svg-file"),
 				plotOutput("boxPlot", height='100%', width='100%'),
 				h4("Box plot statistics"), tableOutput("boxplotStatsTable"),
-				h6("This application was created by the ", a("Tyers", href="http://tyers.iric.ca/"), " and ", a("Rappsilber", href="http://rappsilberlab.org/"), 
-				" labs. Please send bugs and feature requests to Michaela Spitzer (michaela.spitzer(at)gmail.com) and Jan Wildenhain (jan.wildenhain(at)gmail.com). This application uses the ", 
+				h6("This application was created by the ", a("Tyers", href="http://tyers.iric.ca/"), " and ", a("Rappsilber", href="http://rappsilberlab.org/"),
+				" labs. Please send bugs and feature requests to Michaela Spitzer (michaela.spitzer(at)gmail.com) and Jan Wildenhain (jan.wildenhain(at)gmail.com). This application uses the ",
 				a("shiny package from RStudio", href="http://www.rstudio.com/shiny/"), ".")
-			), 
-			# Figure legend 
+			),
+			# Figure legend
 			tabPanel("Figure legend template", h5("Box plot description for figure legend:"), textOutput("FigureLegend"),
 				h5("Further information to be added to the figure legend:"), p("What do the box plots show, explain colours if used."),
 				downloadButton("downloadBoxplotData", "Download box plot data as .CSV file"),
-				h6("This application was created by the ", a("Tyers", href="http://tyers.iric.ca/"), " and ", a("Rappsilber", href="http://rappsilberlab.org/"), 
-				" labs. Please send bugs and feature requests to Michaela Spitzer (michaela.spitzer(at)gmail.com) and Jan Wildenhain (jan.wildenhain(at)gmail.com). This application uses the ", 
+				h6("This application was created by the ", a("Tyers", href="http://tyers.iric.ca/"), " and ", a("Rappsilber", href="http://rappsilberlab.org/"),
+				" labs. Please send bugs and feature requests to Michaela Spitzer (michaela.spitzer(at)gmail.com) and Jan Wildenhain (jan.wildenhain(at)gmail.com). This application uses the ",
 				a("shiny package from RStudio", href="http://www.rstudio.com/shiny/"), ".")
 			),
 			# News
 			tabPanel("News",
+                h5("January 17, 2021"),
+                HTML('<p>There are several recent updates. The jitter of points is now consistent for all samples. When
+                data points are added to the plot, the size and transparence of the points can now be modified with
+                sliders. The link to one of the boxplot references has been updated.</p>'),
+                h5("June 11, 2020"),
+                HTML('<p>The sample names are now displayed as they are in the input, ie., spaces and special characters
+                are not replaced with underscores.</p>'),
                 h5("January 11, 2017"),
-                HTML('<p>If you experience problems with this boxplot server, there is an alternative BoxPlotR mirror available at <a href="http://boxplot.bio.ed.ac.uk">boxplot.bio.ed.ac.uk</a>.</p>'),
+                HTML('<p>If you experience problems with this boxplot server, there is an alternative BoxPlotR mirror
+                available at <a href="http://boxplot.bio.ed.ac.uk">boxplot.bio.ed.ac.uk</a>.</p>'),
                 h5("July 23, 2014"),
      			p("Upgrade to R version 3.1 and shiny-server 1.2"),
-				h5("March 18, 2014"), 
-				p("The user can now choose the color of the data points. There is also an additional option for data point display: data points can now be randomly jittered. 
+				h5("March 18, 2014"),
+				p("The user can now choose the color of the data points. There is also an additional option for data
+				point display: data points can now be randomly jittered.
 				A small bug in label display was fixed. Log scales can now be used.")
 			),			
 			# FAQ 
