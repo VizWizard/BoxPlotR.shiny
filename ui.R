@@ -63,6 +63,8 @@ shinyUI(pageWithSidebar(
 				checkboxInput("showDataPoints", "Add data points", FALSE),
 				conditionalPanel(condition="input.showDataPoints",
 					radioButtons("datapointType", "", list("Default"=0, "Bee swarm"=1, "Jittered"=2)),
+					sliderInput("pointTransparency", "Transparency of data points", min=0, max=99, value=50),
+					sliderInput("pointSize", "Size of data points", min=1, max=20, value=10),
 					HTML('<p style="color:#808080">Using the <a href="http://www.cbs.dtu.dk/~eklund/beeswarm/">beeswarm package</a>.</p>'),
 					textInput("pointColors", "Colour(s):", value=c("black"))					
 				),

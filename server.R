@@ -77,6 +77,7 @@ shinyServer(function(input, output, session) {
 		pointColors<-gsub("\\s","", strsplit(input$pointColors,",")[[1]])
 		pointColors<-gsub("0x","#", pointColors)
 
+		pointTransparency<-100-input$pointTransparency
 
 		nrOfSamples<-ncol(plotData)
 		# Display median or mean for bean plot?
@@ -156,10 +157,14 @@ shinyServer(function(input, output, session) {
 
 				# *** Add data points to plot if selected ***
 				if(input$showDataPoints==TRUE){
-						if(input$datapointType==1){ 
-							beeswarm(plotData, add=TRUE, col=pointColors) 
+						if(input$datapointType==1){
+							beePointColors<-c()
+							for(i in 1:length(pointColors)){
+								beePointColors[i]<-rgb(t(col2rgb(pointColors[i])), max=255, alpha=255*(pointTransparency/100))
+							}
+							beeswarm(plotData, add=TRUE, col=beePointColors, cex=input$pointSize/10, pch=16)
 						} else { 
-							jittered.points(plotData, FALSE, input$datapointType, pointColors) 
+							jittered.points(plotData, FALSE, input$datapointType, pointColors, pointTransparency, input$pointSize/10)
 						}			
 				}
 			} else { # *** Generate violin or bean plot ***
@@ -223,10 +228,14 @@ shinyServer(function(input, output, session) {
 				axis(2,at=c(1:nrOfSamples), labels=colnames(plotData), cex.axis=input$cexAxis/10)
 				# Add data points if option has been selected
 				if(input$showDataPoints==TRUE){
-						if(input$datapointType==1){ 
-							beeswarm(plotData, add=TRUE, horizontal=TRUE, col=pointColors) 
-						} else { 
-							jittered.points(plotData, TRUE, input$datapointType, pointColors) 
+						if(input$datapointType==1){
+							beePointColors<-c()
+							for(i in 1:length(pointColors)){
+								beePointColors[i]<-rgb(t(col2rgb(pointColors[i])), max=255, alpha=255*(pointTransparency/100))
+							}
+							beeswarm(plotData, add=TRUE, horizontal=TRUE, col=beePointColors, cex=input$pointSize/10, pch=16)
+						} else {
+							jittered.points(plotData, TRUE, input$datapointType, pointColors, pointTransparency, input$pointSize/10)
 						}			
 				}
 			} else {
