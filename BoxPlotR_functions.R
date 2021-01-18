@@ -9,7 +9,7 @@ jittered.points<-function(D, myHorizontal=FALSE, pointType, pointColors){
 			if(pointType==0){
 				points(D[,i], rep(i, nrow(D)), col=pointColors[i]) 			
 			} else {
-				points(D[,i], jitter(rep(i, nrow(D)), 3), col=pointColors[i]) 
+				points(D[,i], jitter(rep(i, nrow(D)), amount=0.25), col=pointColors[i])
 			}
 		}
 	} else {
@@ -18,7 +18,7 @@ jittered.points<-function(D, myHorizontal=FALSE, pointType, pointColors){
 			if(pointType==0){
 				points(rep(i, nrow(D)), D[,i], col=pointColors[i])					
 			} else {
-				points(jitter(rep(i, nrow(D)), 3), D[,i], col=pointColors[i])
+				points(jitter(rep(i, nrow(D)), amount=0.25), D[,i], col=pointColors[i])
 			}
 		}
 	}
