@@ -418,6 +418,10 @@ shinyServer(function(input, output, session) {
    		content = function(file) {
 		write.csv(dataM(), file, row.names=FALSE)
     }) ###
+	
+	session$onSessionEnded(function() {
+		stopApp()
+	})
 
 })
 
