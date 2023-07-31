@@ -358,7 +358,9 @@ shinyServer(function(input, output, session) {
 		}
 		print(M)
 		M
-	})
+	},
+	rownames = TRUE
+	)
 	
 	# *** Print figure legend ***
 	output$FigureLegend <- renderPrint({
